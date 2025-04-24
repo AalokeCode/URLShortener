@@ -58,10 +58,7 @@
     <div
       class="mb-3 rounded-lg w-11/12 xl:w-3/4 p-2 pl-4 bg-zinc-800 flex justify-between items-center"
     >
-      <a
-        href="{{new_url}}"
-        id="output"
-        class="w-3/4 text-gray-400"
+      <a href="{{new_url}}" id="output" class="w-3/4 text-gray-400"
         >{{new_url}}
       </a>
       <button
@@ -122,20 +119,20 @@
     return new Promise((resolve) => setTimeout(resolve, ms));
     event.preventDefault();
   }
-  let text = document.getElementById("output");
-  let button = document.getElementById("copyButton").innerHTML;
-
   // copy button
   const copyContent = async () => {
     event.preventDefault();
+
+    let text = document.getElementById("output");
+    let button = document.getElementById("copyButton").innerHTML;
     try {
-      await navigator.clipboard.writeText(text.value);
+      await navigator.clipboard.writeText(text.text.trim() + "\b\b");
+      console.log("Content copied to clipboard");
       copyButton.innerHTML =
         '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 256 256"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"></path></svg>';
       await sleep(2500);
       copyButton.innerHTML =
         '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fff" viewBox="0 0 256 256"> <path d="M200,32H163.74a47.92,47.92,0,0,0-71.48,0H56A16,16,0,0,0,40,48V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm-72,0a32,32,0,0,1,32,32H96A32,32,0,0,1,128,32Zm72,184H56V48H82.75A47.93,47.93,0,0,0,80,64v8a8,8,0,0,0,8,8h80a8,8,0,0,0,8-8V64a47.93,47.93,0,0,0-2.75-16H200Z"></path></svg>';
-      console.log("Content copied to clipboard");
     } catch (err) {
       console.error("Failed to copy: ", err);
     }

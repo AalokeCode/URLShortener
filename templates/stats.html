@@ -42,10 +42,16 @@
         class="text-xs uppercase border-b border-b-zinc-700 dark:text-zinc-400"
       >
         <tr>
-          <th scope="col" class="px-6 py-3 text-center text-md">Original URL</th>
-          <th scope="col" class="px-6 py-3 text-center text-md">Shortened URL</th>
+          <th scope="col" class="px-6 py-3 text-center text-md">
+            Original URL
+          </th>
+          <th scope="col" class="px-6 py-3 text-center text-md">
+            Shortened URL
+          </th>
           <th scope="col" class="px-6 py-3 text-center text-md">Clicks</th>
-          <th scope="col" class="px-6 py-3 text-center text-md">Date & Time Created</th>
+          <th scope="col" class="px-6 py-3 text-center text-md">
+            Date & Time Created
+          </th>
           <th scope="col" class="px-6 py-3 text-center text-md">Actions</th>
         </tr>
       </thead>
@@ -57,19 +63,21 @@
           </td>
           <td class="px-6 py-4 text-center">
             <a
-              href="https://trim.lol/{{url['ShortenedURL']}}"
+              href="{{domain}}{{url['ShortenedURL']}}"
               target="_blank"
               class="shortened-url block max-w-80 truncate"
-              >https://trim.lol/{{url['ShortenedURL']}}</a
+              >{{domain}}{{url['ShortenedURL']}}</a
             >
           </td>
           <td class="px-6 py-4 text-center">{{url['Clicks']}}</td>
           <td class="px-6 py-4 text-center">{{url['Timestamp']}}</td>
-          <td class="pl-6 py-4 flex justify-center items-center gap-2 relative right-2.5">
+          <td
+            class="pl-6 py-4 flex justify-center items-center gap-2 relative right-2.5"
+          >
             <button
               class="copy-button w-[83px] text-white bg-blue-700 flex items-center gap-3 hover:bg-blue-800 p-2 rounded-lg"
               onclick="copyContent(this)"
-              data-url="https://trim.lol/{{url['ShortenedURL']}}"
+              data-url="{{domain}}{{url['ShortenedURL']}}"
             >
               Copy
               <svg
@@ -167,11 +175,7 @@
 
   async function deletecontent(button) {
     const shortenedUrl = button.dataset.msg;
-    if (
-      confirm(
-        `Are you sure you want to delete https://trim.lol/ ${shortenedUrl}`,
-      )
-    ) {
+    if (confirm(`Are you sure you want to delete {{domain}}${shortenedUrl}`)) {
       try {
         const response = await fetch("/delete", {
           method: "POST",

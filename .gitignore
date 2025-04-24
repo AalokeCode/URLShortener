@@ -6,3 +6,4 @@ package-lock.json
 node_modules
 .vercel
 venv
+.DS_STORE

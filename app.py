@@ -64,7 +64,11 @@ from authlib.integrations.flask_client import OAuth
 # ? Required.
 app = Flask(__name__)
 app.config["SECRET_KEY"] = environ.get("SECRET_KEY")
-domain = "https://trim.lol/"
+if environ.get("DOMAIN"):
+    domain = environ.get("DOMAIN")
+else:
+    domain = "https://trim.lol/"
+    
 hasUsedApp = False
 
 # ? Google OAuth Client ID, Secret, and Redirect URI
@@ -365,7 +369,7 @@ def stats():
     userID = request.cookies.get("userID")
     if userID and usersColl.find_one({"UserID": userID}) != None:
         urls = list(URLsColl.find({"UserID": userID}, {"_id": 0}))
-        return render_template("stats.html", urls=urls, userID=userID)
+        return render_template("stats.html", urls=urls, userID=userID, domain=domain)
     else:
         response = make_response(redirect("/"))
         response.set_cookie("userID", "", expires=0)
